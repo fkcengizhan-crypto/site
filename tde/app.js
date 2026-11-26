@@ -8,7 +8,7 @@
   const LETTERS = ["A", "B", "C", "D"];
 
   const state = {
-    mode: "10",
+    mode: "50",
     topic: "all",
     source: "all",
     quiz: [],

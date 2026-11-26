@@ -6,7 +6,7 @@
 
 - **174 soru:** 10 tanesi MEB AÖL (546) çalışma sorularından, 164 tanesi konu tekrarı için hazırlanmış ek sorulardan oluşur.
 - **Her açılışta karışık sıra:** Test başladığında sorular ve A–D seçenekleri yeniden karıştırılır.
-- **Esnek test uzunluğu:** 10, 25, 50 veya tüm sorular (174) ile çalışabilirsiniz.
+- **Esnek test uzunluğu:** 50, 100, 150 veya tüm sorular (174) ile çalışabilirsiniz.
 - **Kaynak filtresi:** Tüm sorular, yalnızca MEB çalışma soruları veya yalnızca ek sorular seçilebilir.
 - **Anında geri bildirim:** Cevap seçildiğinde doğru/yanlış gösterilir; kısa açıklama ve “Bilgi notu” ile konu pekiştirilir.
 - **Konu notları:** Roman, tiyatro, şiir, makale-eleştiri-mülakat, anlatım bozuklukları, yazım-noktalama ve edebî dönemler için 7 açılır kart.
