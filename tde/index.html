@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#110e0a">
+  <script>
+    (function () {
+      var theme = "dark";
+      try {
+        var saved = localStorage.getItem("tded6_theme_v1");
+        if (saved === "light" || saved === "dark") theme = saved;
+      } catch (err) { /* depolama kapalı olabilir */ }
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.style.colorScheme = theme;
+    })();
+  </script>
   <meta name="description" content="AÖL Türk Dili ve Edebiyatı 6 için MEB çalışma soruları ve konu tekrar sorularından oluşan, her açılışta karışan interaktif test.">
   <title>AÖL Türk Dili ve Edebiyatı 6 — Çalışma Testi</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%238c2f39'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' fill='%23fff8ef' text-anchor='middle'%3ETD%3C/text%3E%3C/svg%3E">
@@ -19,6 +31,10 @@
         </div>
       </div>
       <div class="header-actions">
+        <button class="btn btn-ghost icon-btn" id="themeBtn" type="button" aria-label="Aydınlık moda geç" title="Aydınlık moda geç" aria-pressed="true">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
         <button class="btn btn-ghost" id="notesBtn" type="button" aria-label="Konu Notları" title="Konu Notları">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           <span class="btn-label">Konu Notları</span>
@@ -36,14 +52,14 @@
             <h1 class="display">Türk Dili ve<br><em>Edebiyatı 6</em></h1>
             <p class="lead">
               MEB çalışma soruları ve sınavda çıkabilecek konulardan oluşan
-              <strong>54 soruluk</strong> interaktif test. Her yenilemede sorular ve seçenekler
+              <strong><span data-count-total>174</span> soruluk</strong> interaktif test. Her yenilemede sorular ve seçenekler
               yeniden karışır; her cevaptan sonra konuyu pekiştiren bir <strong>bilgi notu</strong> görürsün.
             </p>
 
             <div class="feature-row">
               <span class="chip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                54 soru
+                <span data-count-total>174</span> soru
               </span>
               <span class="chip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 7h7"/><path d="M8 11h7"/></svg>
@@ -60,8 +76,8 @@
             </div>
 
             <div class="hero-stats">
-              <div class="stat"><b>54</b><span>toplam soru</span></div>
-              <div class="stat"><b>10</b><span>MEB çalışma sorusu</span></div>
+              <div class="stat"><b data-count-total>174</b><span>toplam soru</span></div>
+              <div class="stat"><b data-count-official>10</b><span>MEB çalışma sorusu</span></div>
               <div class="stat"><b>7</b><span>konu başlığı</span></div>
             </div>
 
@@ -80,6 +96,7 @@
               <div class="seg" role="group" aria-label="Soru sayısı">
                 <button type="button" class="seg-btn active" data-mode="10">10</button>
                 <button type="button" class="seg-btn" data-mode="25">25</button>
+                <button type="button" class="seg-btn" data-mode="50">50</button>
                 <button type="button" class="seg-btn" data-mode="all">Tümü</button>
               </div>
             </div>
@@ -94,9 +111,9 @@
             <div class="field">
               <label class="field-label" for="sourceSelect"><span>Kaynak</span></label>
               <select id="sourceSelect">
-                <option value="all">Tüm sorular (54)</option>
-                <option value="official">MEB çalışma soruları (10)</option>
-                <option value="extra">Ek / muhtemel sorular (44)</option>
+                <option value="all" id="sourceAllOption">Tüm sorular (174)</option>
+                <option value="official" id="sourceOfficialOption">MEB çalışma soruları (10)</option>
+                <option value="extra" id="sourceExtraOption">Ek / muhtemel sorular (164)</option>
               </select>
             </div>
 
@@ -354,13 +371,14 @@
 
     <footer class="site-footer">
       <p>Soruların bir bölümü MEB Açık Öğretim Lisesi (546) Türk Dili ve Edebiyatı 6 çalışma sorularından derlenmiştir; diğerleri konu tekrarı amacıyla hazırlanmış ek sorulardır. Eğitim amaçlıdır, resmî sınav kitapçığı değildir.</p>
-      <p class="credit">Her yenilemede yeni bir sıra · 54 soru</p>
+      <p class="credit">Her yenilemede yeni bir sıra · <span data-count-total>174</span> soru</p>
     </footer>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="questions.js"></script>
+  <script src="questions-more.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

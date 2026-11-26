@@ -4,6 +4,7 @@
 
   const ALL = window.QUESTIONS.slice();
   const BEST_KEY = "tded6_best_score_v1";
+  const THEME_KEY = "tded6_theme_v1";
   const LETTERS = ["A", "B", "C", "D"];
 
   const state = {
@@ -71,6 +72,58 @@
     box.classList.add("show");
     window.clearTimeout(toast._timer);
     toast._timer = window.setTimeout(() => box.classList.remove("show"), 2200);
+  }
+
+  /* ---------- Tema ---------- */
+  function applyTheme(theme, announce) {
+    const next = theme === "light" ? "light" : "dark";
+    const dark = next === "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    document.documentElement.style.colorScheme = next;
+
+    const btn = $("themeBtn");
+    if (btn) {
+      const label = dark ? "Aydınlık moda geç" : "Karanlık moda geç";
+      btn.setAttribute("aria-label", label);
+      btn.setAttribute("title", label);
+      btn.setAttribute("aria-pressed", dark ? "true" : "false");
+    }
+
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", dark ? "#110e0a" : "#f3eee3");
+
+    try { window.localStorage.setItem(THEME_KEY, next); } catch (err) { /* depolama kapalı olabilir */ }
+    if (announce) toast(dark ? "Karanlık mod açık" : "Aydınlık mod açık");
+  }
+
+  function initTheme() {
+    let saved = null;
+    try { saved = window.localStorage.getItem(THEME_KEY); } catch (err) { /* depolama kapalı olabilir */ }
+    applyTheme(saved === "light" ? "light" : "dark", false);
+
+    const btn = $("themeBtn");
+    if (btn) {
+      btn.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+        applyTheme(current === "dark" ? "light" : "dark", true);
+      });
+    }
+  }
+
+  /* ---------- Sayaçlar ---------- */
+  function syncCounts() {
+    const total = ALL.length;
+    const official = ALL.filter((q) => q.source === "official").length;
+    const extra = total - official;
+    document.querySelectorAll("[data-count-total]").forEach((node) => { node.textContent = total; });
+    document.querySelectorAll("[data-count-official]").forEach((node) => { node.textContent = official; });
+
+    const allOption = $("sourceAllOption");
+    const officialOption = $("sourceOfficialOption");
+    const extraOption = $("sourceExtraOption");
+    if (allOption) allOption.textContent = `Tüm sorular (${total})`;
+    if (officialOption) officialOption.textContent = `MEB çalışma soruları (${official})`;
+    if (extraOption) extraOption.textContent = `Ek / muhtemel sorular (${extra})`;
   }
 
   /* ---------- Start screen ---------- */
@@ -512,6 +565,8 @@
 
   /* ---------- Init ---------- */
   function init() {
+    syncCounts();
+    initTheme();
     populateTopics();
     bindStart();
     bindNotes();
